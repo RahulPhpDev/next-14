@@ -23,7 +23,7 @@ const  Album:NextPage =  () => {
                  <p> {count} </p>
         <h2 className='text-lg font-bold'> Here are top Album.</h2>
         <ul className='list-disc'>
-            {albums.map(alb => (
+            {albums.map((alb:any) => (
                 <li className='bullet' key ={alb?.id}>{alb?.title} </li>
             ))
             }

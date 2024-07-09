@@ -27,7 +27,7 @@ const Counter = () => {
             <div className='mt-3'>
 
             <input className= "p-2" type = "text" value={numVal}
-              onChange={e => setNumVal(e.target.value)}
+              onChange={(e) => setNumVal( +e?.target?.value)}
             />
 
             <button className="bg-blue-600 p-2 text-center text-sm font-bold text-white rounded-lg ml-5"
