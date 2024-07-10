@@ -18,7 +18,6 @@ export async function GetAlbum() {
    // 127.0.0.1:1337
    const jsonData =  await axios.get(`http://127.0.0.1:1337/api/countries`);
    const albums =  await  jsonData.data
-   console.log('json Data', albums)
     return albums;
  }
   

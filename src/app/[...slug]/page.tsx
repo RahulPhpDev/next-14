@@ -7,53 +7,41 @@ import type {
   import * as fs from 'fs';
 import { slugService } from '@/services/slugService';
 import {India, Srilanka} from '@/component/country';
-const Slug = async ({ params }:{params:any}) => {
-   
-    const {slug} = params;
-   
-    console.log('countries', slug?.[0])
-    const layoutMapping:any = {
-        India: India,
-        Srilanka: Srilanka,
-    }
-    const Layout = layoutMapping[slug?.[0]];
+
+
+// this getProjects only trigger during build time , so can be put entire logic here
+// like get static props
+async function getProjects(getMinute:number) {
+    const res = 2 * 3 * 5 * +getMinute;
+    return res;
+}
+const Slug = async ({ params}:{params:any}) => {
+
+    const getMinute = (new Date()).getMinutes()
+    const projects = await getProjects(getMinute)
+
     return (
         <div>
-            Slug File
-          {
+            Slug File {projects}
+          {/* {
             Layout ? <Layout /> : null
-          }  
-            {/* {countries.map( (cot:any) => {
-                return (
-                    <h1 key ={cot?.id}> {cot?.attributes?.name} </h1>
-                )
-            })
-            } */}
+          }  */}
         </div>
     )
 }
 
-export const dynamicParams = false
+// export const dynamicParams = false
+// export const revalidate = false
 
 
 export const generateStaticParams = async (): Promise<any> => {
     await slugService.generatePaths();
 
      const countries:Country[] = await slugService.readFromPaths();
-    //  return countries.map((country:Country) => ({
-    //     slug: [country?.attributes?.name],
-    //   }))
-     return countries.map((country:Country) => ({
-       slug: [country?.attributes?.name],
+     
+    return countries.map((country:Country) => ({
+        slug: [country?.attributes?.name?.toLowerCase().replace(' ', '_')],
       }))
-
-    //   return [{ slug: ['India'] }, { slug: ['Srilanakas'] }]
-//other optoin 
-//eturn [
-//     { category: 'a', product: '1' },
-//     { category: 'b', product: '2' },
-//     { category: 'c', product: '3' },
-//   ]
   }
 
 
